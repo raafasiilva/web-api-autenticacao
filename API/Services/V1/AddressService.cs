@@ -13,11 +13,8 @@ namespace API.Services.V1
 {
     public class AddressService : BaseService<AddressService>, IAddressService
     {
-        private readonly IViaCepIntegration _viaCepIntegration;
-
-        public AddressService(IServiceWrapper serviceWrapper, IRepositoryWrapper repositoryWrapper,
-            IViaCepIntegration viaCepIntegration) : base(serviceWrapper, repositoryWrapper) =>
-            _viaCepIntegration = viaCepIntegration;
+        public AddressService(IServiceWrapper serviceWrapper, IRepositoryWrapper repositoryWrapper)
+            : base(serviceWrapper, repositoryWrapper) { }
 
         public async Task AddAddressAsync(AddressCreationModel creationModel)
         {
@@ -37,7 +34,7 @@ namespace API.Services.V1
                 .GetAllAsync(_serviceWrapper.Mapper.Map<FilterParamBase>(queryModel)));
 
         public async Task<AddressViewModel> GetAddressByZipCodeAsync(string zipCode) =>
-            _serviceWrapper.Mapper.Map<AddressViewModel>(await _viaCepIntegration.GetAddressByZipCodeAsync(zipCode));
+            _serviceWrapper.Mapper.Map<AddressViewModel>(await _serviceWrapper.ViaCepIntegration.GetAddressByZipCodeAsync(zipCode));
 
         public async Task RemoveAddressByIdAsync(Guid id) =>
             await _repositoryWrapper.Address.RemoveAsync(await _repositoryWrapper.Address.GetByIdAsync(id));

@@ -13,6 +13,8 @@ using App.Infraestructure.DbContexts;
 using App.Infraestructure.Integrations.V1;
 using App.Infraestructure.Repositories;
 using App.Infraestructure.Repositories.V1;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -38,6 +40,7 @@ namespace API.Extensions
             services.ConfigureDependenciesInjections();
             services.ConfigureModelsMappings();
             services.ConfigureDocumentation();
+            services.ConfigureApiVersions();
         }
 
         private static void ConfigureDocumentation(this IServiceCollection services)
@@ -102,6 +105,23 @@ namespace API.Extensions
             services.AddScoped<DapperDbContext>(x => new(configuration.GetValue<string>("App:DbContextOption:ConnectionString")));
             services.AddDbContext<AuthenticationDbContext>(options => options.UseNpgsql(configuration.GetValue<string>("App:DbContextOption:ConnectionString")));
             //services.AddDbContext<EntityDbContext>(options => options.UseNpgsql(configuration.GetValue<string>("App:DbContextOption:ConnectionString")));
+        }
+
+        private static void ConfigureApiVersions(this IServiceCollection services)
+        {
+            IApiVersionReader[] apiVersionParams = { 
+                new UrlSegmentApiVersionReader(), 
+                new HeaderApiVersionReader("x-api-version"), 
+                new MediaTypeApiVersionReader("x-api-version")
+            };
+
+            services.AddApiVersioning(options => 
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ReportApiVersions = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(apiVersionParams);
+            });
         }
 
         private static void ConfigureModelsMappings(this IServiceCollection services) => services

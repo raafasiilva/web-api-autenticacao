@@ -5,9 +5,10 @@ using API.Models.Contracts.ErrorModels;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Controllers.V1
+namespace API.Controllers.V1_0
 {
-    [Route("api/v1/adresses")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/adresses")]
     public class AddressController : BaseController
     {
         private readonly IAddressService _addressService;

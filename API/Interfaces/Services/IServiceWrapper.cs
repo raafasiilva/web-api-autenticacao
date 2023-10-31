@@ -1,4 +1,5 @@
-﻿using App.Domain.Interfaces.Kernels;
+﻿using App.Domain.Interfaces.Integrations.V1;
+using App.Domain.Interfaces.Kernels;
 using AutoMapper;
 
 namespace API.Interfaces.Services
@@ -7,5 +8,6 @@ namespace API.Interfaces.Services
     {
         IExceptionNotificationKernel ExceptionNotification { get; }
         IMapper Mapper { get; }
+        IViaCepIntegration ViaCepIntegration { get; }
     }
 }
