@@ -9,6 +9,7 @@ namespace API.Controllers.V1_0
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/adresses")]
+    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AddressController : BaseController
     {
         private readonly IAddressService _addressService;
