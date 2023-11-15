@@ -5,7 +5,7 @@ namespace App.Infraestructure.Extensions
 {
     public static class EntityEntryExtension
     {
-        public static IEnumerable<EntityEntry> SetDateTimeByEntityState(this IEnumerable<EntityEntry> entityEntries, string[] propertiesNames)
+        public static IEnumerable<EntityEntry> SetDateTimeNow(this IEnumerable<EntityEntry> entityEntries, string[] propertiesNames)
         {
             EntityState[] entityStates = new EntityState[] { EntityState.Added, EntityState.Modified };
 
@@ -23,7 +23,7 @@ namespace App.Infraestructure.Extensions
             return entityEntries;
         }
 
-        public static IEnumerable<EntityEntry> SetDateTimeByEntityState(this IEnumerable<EntityEntry> entityEntries, string[] propertiesNames, EntityState entityState)
+        public static IEnumerable<EntityEntry> SetDateTimeNowByEntityState(this IEnumerable<EntityEntry> entityEntries, string[] propertiesNames, EntityState entityState)
         {
             foreach (EntityEntry entityEntrie in entityEntries.Where(x => x.State.Equals(entityState)))
             {

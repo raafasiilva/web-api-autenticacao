@@ -33,17 +33,17 @@ namespace App.Infraestructure.DbContexts
 
         public override int SaveChanges()
         {
-            SetNewDateTimeUtcInEntries();
+            SetDateTimeNowInEntries();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            SetNewDateTimeUtcInEntries();
+            SetDateTimeNowInEntries();
             return base.SaveChangesAsync(cancellationToken);
         }
 
-        private void SetNewDateTimeUtcInEntries() => ChangeTracker.Entries()
-            .SetDateTimeByEntityState(new string[] { "CreationDate", "UpdateDate" });
+        private void SetDateTimeNowInEntries() => ChangeTracker.Entries()
+            .SetDateTimeNow(new string[] { "CreationDate", "UpdateDate" });
     }
 }
