@@ -7,7 +7,7 @@ namespace App.Infraestructure.Extensions
     {
         public static IEnumerable<EntityEntry> SetDateTimeNow(this IEnumerable<EntityEntry> entityEntries, string[] propertiesNames)
         {
-            EntityState[] entityStates = new EntityState[] { EntityState.Added, EntityState.Modified };
+            EntityState[] entityStates = [EntityState.Added, EntityState.Modified];
 
             foreach (EntityEntry entityEntrie in entityEntries.Where(x => entityStates.Contains(x.State)))
             {

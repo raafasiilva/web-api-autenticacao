@@ -5,12 +5,9 @@ using AutoMapper;
 
 namespace API.Services
 {
-    public class ServiceWrapper : IServiceWrapper
+    public class ServiceWrapper(IServiceProvider serviceProvider) : IServiceWrapper
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public ServiceWrapper(IServiceProvider serviceProvider) =>
-            _serviceProvider = serviceProvider;
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public IExceptionNotificationKernel ExceptionNotification => GetService<IExceptionNotificationKernel>();
 

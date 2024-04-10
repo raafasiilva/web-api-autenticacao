@@ -1,5 +1,4 @@
 using API.Extensions;
-using Microsoft.AspNetCore.Mvc.Versioning;
 
 WebApplicationBuilder webApplicationBuilder = WebApplication.CreateBuilder(args);
 webApplicationBuilder.Logging.ClearProviders();

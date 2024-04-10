@@ -7,12 +7,10 @@ using System.Data;
 
 namespace App.Infraestructure.Repositories.V1
 {
-    public class AddressRepository : TEntityRepository<Address, AuthenticationDbContext>, IAddressRepository
+    public class AddressRepository(DbContextOptions<AuthenticationDbContext> dbContextOptions, DapperDbContext dapperDbContext) 
+        : TEntityRepository<Address, AuthenticationDbContext>(dbContextOptions), IAddressRepository
     {
-        private readonly DapperDbContext _dapperDbContext;
-
-        public AddressRepository(DbContextOptions<AuthenticationDbContext> dbContextOptions, DapperDbContext dapperDbContext) : base(dbContextOptions) =>
-            _dapperDbContext = dapperDbContext;
+        private readonly DapperDbContext _dapperDbContext = dapperDbContext;
 
         public async Task<bool> HasByIdAsync(Guid id)
         {

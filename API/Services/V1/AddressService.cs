@@ -11,11 +11,9 @@ using FluentValidation.Results;
 
 namespace API.Services.V1
 {
-    public class AddressService : BaseService<AddressService>, IAddressService
+    public class AddressService(IServiceWrapper serviceWrapper, IRepositoryWrapper repositoryWrapper) 
+        : BaseService<AddressService>(serviceWrapper, repositoryWrapper), IAddressService
     {
-        public AddressService(IServiceWrapper serviceWrapper, IRepositoryWrapper repositoryWrapper)
-            : base(serviceWrapper, repositoryWrapper) { }
-
         public async Task AddAddressAsync(AddressCreationModel creationModel)
         {
             Address address = _serviceWrapper.Mapper.Map<Address>(creationModel).Normalize();

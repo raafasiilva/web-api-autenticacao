@@ -2,6 +2,7 @@
 using API.Models.Contracts.AddressModels;
 using API.Models.Contracts.BaseModels;
 using API.Models.Contracts.ErrorModels;
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

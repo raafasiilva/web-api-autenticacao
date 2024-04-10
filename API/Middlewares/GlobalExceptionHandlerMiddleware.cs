@@ -7,19 +7,12 @@ using System.Text.Json;
 
 namespace API.Middlewares
 {
-    public class GlobalExceptionHandlerMiddleware : IMiddleware
+    public class GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger, IExceptionNotificationKernel exceptionNotificationKernel) : IMiddleware
     {
         private const string DEFAULT_MESSAGE = "Não foi possível realizar esta ação. Por favor, tente novamente mais tarde.";
 
-        private readonly ILogger _logger;
-        private readonly IExceptionNotificationKernel _exceptionNotificationKernel;
-
-        public GlobalExceptionHandlerMiddleware(ILogger<GlobalExceptionHandlerMiddleware> logger, IExceptionNotificationKernel exceptionNotificationKernel) 
-        {
-            _logger = logger;
-            _exceptionNotificationKernel = exceptionNotificationKernel;
-        }
-            
+        private readonly ILogger _logger = logger;
+        private readonly IExceptionNotificationKernel _exceptionNotificationKernel = exceptionNotificationKernel;
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {

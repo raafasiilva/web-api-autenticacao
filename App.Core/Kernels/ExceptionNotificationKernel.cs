@@ -9,7 +9,7 @@ namespace App.Domain.Kernels
         private readonly List<Notification> _notifications;
 
         public ExceptionNotificationKernel() =>
-            _notifications = new List<Notification>();
+            _notifications = [];
 
 
         public bool HasNotifications => _notifications.Any();

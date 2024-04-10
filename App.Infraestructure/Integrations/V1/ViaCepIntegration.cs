@@ -5,10 +5,9 @@ using System.Text.Json;
 
 namespace App.Infraestructure.Integrations.V1
 {
-    public class ViaCepIntegration : BaseIntegration, IViaCepIntegration
+    public class ViaCepIntegration(HttpClient httpClient, IExceptionNotificationKernel exceptionNotificationKernel) 
+        : BaseIntegration(httpClient, exceptionNotificationKernel), IViaCepIntegration
     {
-        public ViaCepIntegration(HttpClient httpClient, IExceptionNotificationKernel exceptionNotificationKernel)
-            : base(httpClient, exceptionNotificationKernel) { }
 
         /// <summary>
         /// Consulta endereço pelo CEP.

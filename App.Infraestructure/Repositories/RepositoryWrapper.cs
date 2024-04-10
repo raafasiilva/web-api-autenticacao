@@ -4,12 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace App.Infraestructure.Repositories
 {
-    public class RepositoryWrapper : IRepositoryWrapper
+    public class RepositoryWrapper(IServiceProvider serviceProvider) : IRepositoryWrapper
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public RepositoryWrapper(IServiceProvider serviceProvider) =>
-            _serviceProvider = serviceProvider;
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public IAddressRepository Address => GetRepository<IAddressRepository>();
 

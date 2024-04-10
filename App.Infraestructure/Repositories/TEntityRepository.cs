@@ -5,12 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace App.Infraestructure.Repositories
 {
-    public class TEntityRepository<TEntity, TDbContext> : ITEntityRepository<TEntity> where TEntity : EntityBase where TDbContext : DbContext
+    public class TEntityRepository<TEntity, TDbContext>(DbContextOptions<TDbContext> dbContextOptions) 
+        : ITEntityRepository<TEntity> where TEntity : EntityBase where TDbContext : DbContext
     {
-        protected DbContextOptions<TDbContext> DbContextOptions { get; private set; }
-
-        public TEntityRepository(DbContextOptions<TDbContext> dbContextOptions) => 
-            DbContextOptions = dbContextOptions;
+        protected DbContextOptions<TDbContext> DbContextOptions { get; private set; } = dbContextOptions;
 
         public virtual void Add(TEntity entity)
         {

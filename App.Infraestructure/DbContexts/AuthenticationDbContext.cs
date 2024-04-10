@@ -44,6 +44,6 @@ namespace App.Infraestructure.DbContexts
         }
 
         private void SetDateTimeNowInEntries() => ChangeTracker.Entries()
-            .SetDateTimeNow(new string[] { "CreationDate", "UpdateDate" });
+            .SetDateTimeNow(["CreationDate", "UpdateDate"]);
     }
 }

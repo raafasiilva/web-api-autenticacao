@@ -13,13 +13,11 @@ using App.Infraestructure.DbContexts;
 using App.Infraestructure.Integrations.V1;
 using App.Infraestructure.Repositories;
 using App.Infraestructure.Repositories.V1;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
+using Asp.Versioning;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Net.Http.Headers;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace API.Extensions
