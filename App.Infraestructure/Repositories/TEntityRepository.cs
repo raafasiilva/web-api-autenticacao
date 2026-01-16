@@ -2,6 +2,7 @@
 using App.Domain.Models.Entities.BaseEntities;
 using App.Domain.Models.FilterParams.BaseFilters;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace App.Infraestructure.Repositories
 {
@@ -19,13 +20,13 @@ namespace App.Infraestructure.Repositories
             context.SaveChanges();
         }
 
-        public virtual async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
-            await context.Set<TEntity>().AddAsync(entity);
-            await context.SaveChangesAsync();
+            await context.Set<TEntity>().AddAsync(entity, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         public virtual void AddRange(IEnumerable<TEntity> entities)
@@ -37,13 +38,13 @@ namespace App.Infraestructure.Repositories
             context.SaveChanges();
         }
 
-        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
             await context.Set<TEntity>().AddRangeAsync(entities);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         public virtual IEnumerable<TEntity> GetAll()
@@ -67,15 +68,15 @@ namespace App.Infraestructure.Repositories
             return new EntityCollectionBase<TEntity>(totalItens, filterParam.Page, filterParam.PageSize, entities);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
-            return await context.Set<TEntity>().AsNoTracking().ToListAsync();
+            return await context.Set<TEntity>().AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public virtual async Task<EntityCollectionBase<TEntity>> GetAllAsync(FilterParamBase filterParam)
+        public virtual async Task<EntityCollectionBase<TEntity>> GetAllAsync(FilterParamBase filterParam, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
@@ -96,12 +97,12 @@ namespace App.Infraestructure.Repositories
             return context.Find<TEntity>(id);
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(Guid id)
+        public virtual async Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
-            return await context.FindAsync<TEntity>(id);
+            return await context.FindAsync<TEntity>(id, cancellationToken);
         }
 
         public virtual void Remove(TEntity entity)
@@ -113,13 +114,13 @@ namespace App.Infraestructure.Repositories
             context.SaveChanges();
         }
 
-        public virtual async Task RemoveAsync(TEntity entity)
+        public virtual async Task RemoveAsync(TEntity entity, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
             context.Set<TEntity>().Remove(entity);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         public virtual void RemoveRange(IEnumerable<TEntity> entities)
@@ -131,13 +132,13 @@ namespace App.Infraestructure.Repositories
             context.SaveChanges();
         }
 
-        public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task RemoveRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
             context.Set<TEntity>().RemoveRange(entities);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         public virtual void Update(TEntity entity)
@@ -149,13 +150,13 @@ namespace App.Infraestructure.Repositories
             context.SaveChanges();
         }
 
-        public virtual async Task UpdateAsync(TEntity entity)
+        public virtual async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
             context.Set<TEntity>().Update(entity);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
 
         public virtual void UpdateRange(IEnumerable<TEntity> entities)
@@ -167,13 +168,13 @@ namespace App.Infraestructure.Repositories
             context.SaveChanges();
         }
 
-        public virtual async Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+        public virtual async Task UpdateRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
         {
             using TDbContext context = (TDbContext)Activator
                 .CreateInstance(typeof(TDbContext), DbContextOptions);
 
             context.Set<TEntity>().UpdateRange(entities);
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -5,11 +5,11 @@ namespace API.Interfaces.Services.V1
 {
     public interface IAddressService : IBaseService
     {
-        Task AddAddressAsync(AddressCreationModel creationModel);
-        Task<AddressViewModel> GetAddressByIdAsync(Guid id);
-        Task<ModelCollectionBaseViewModel<AddressViewModel>> GetAllAdressesAsync(FilterParamBaseQueryModel queryModel);
-        Task<AddressViewModel> GetAddressByZipCodeAsync(string zipCode);
-        Task RemoveAddressByIdAsync(Guid id);
-        Task UpdateAddressAsync(AddressUpdateModel updateModel);
+        Task AddAddressAsync(AddressCreationModel creationModel, CancellationToken cancellationToken);
+        Task<AddressViewModel> GetAddressByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task<ModelCollectionBaseViewModel<AddressViewModel>> GetAllAdressesAsync(FilterParamBaseQueryModel queryModel, CancellationToken cancellationToken);
+        Task<AddressViewModel> GetAddressByZipCodeAsync(string zipCode, CancellationToken cancellationToken);
+        Task RemoveAddressByIdAsync(Guid id, CancellationToken cancellationToken);
+        Task UpdateAddressAsync(AddressUpdateModel updateModel, CancellationToken cancellationToken);
     }
 }
