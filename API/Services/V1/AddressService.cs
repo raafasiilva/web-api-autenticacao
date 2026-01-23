@@ -32,7 +32,7 @@ namespace API.Services.V1
                 .GetAllAsync(_serviceWrapper.Mapper.Map<FilterParamBase>(queryModel), cancellationToken));
 
         public async Task<AddressViewModel> GetAddressByZipCodeAsync(string zipCode, CancellationToken cancellationToken) =>
-            _serviceWrapper.Mapper.Map<AddressViewModel>(await _serviceWrapper.ViaCepIntegration.GetAddressByZipCodeAsync(zipCode));
+            _serviceWrapper.Mapper.Map<AddressViewModel>(await _serviceWrapper.ViaCepIntegration.GetAddressByZipCodeAsync(zipCode, cancellationToken));
 
         public async Task RemoveAddressByIdAsync(Guid id, CancellationToken cancellationToken) =>
             await _repositoryWrapper.Address.RemoveAsync(await _repositoryWrapper.Address.GetByIdAsync(id, cancellationToken), cancellationToken);
@@ -40,7 +40,8 @@ namespace API.Services.V1
         public async Task UpdateAddressAsync(AddressUpdateModel updateModel, CancellationToken cancellationToken)
         {
             Address address = _serviceWrapper.Mapper.Map<Address>(updateModel).Normalize();
-            ValidationResult validations = await new AddressUpdateValidation(_repositoryWrapper).ValidateAsync(address);
+            ValidationResult validations = await new AddressUpdateValidation(_repositoryWrapper)
+                .ValidateAsync(address, cancellationToken);
 
             if (!validations.IsValid) ThrowException(validations);
 

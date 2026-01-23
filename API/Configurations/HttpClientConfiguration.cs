@@ -5,11 +5,12 @@ namespace API.Configurations
 {
     public static class HttpClientConfiguration
     {
-        public static Func<HttpMessageHandler> ConfigurePrimaryHttpMessageHandler() => () => new HttpClientHandler
+        public static Func<HttpMessageHandler> ConfigurePrimaryHttpMessageHandler() => () => new SocketsHttpHandler
         {
-            AllowAutoRedirect = false,
             AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip,
-            CheckCertificateRevocationList = false
+            PooledConnectionLifetime = TimeSpan.FromMinutes(5),       // rotaciona conexões para respeitar DNS changes
+            PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),    // tempo para conexões ociosas
+            MaxConnectionsPerServer = 100
         };
 
         public static Func<PolicyBuilder<HttpResponseMessage>, IAsyncPolicy<HttpResponseMessage>> ConfigureHttpErrorPolicyOrResult(int retryCount) => options =>
